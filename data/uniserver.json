@@ -1,0 +1,25 @@
+{
+  "servers": [
+    {
+      "id": "c8f2d5b8-fa35-4a4f-aacb-fbb614796f60",
+      "createdAt": "2026-08-27T13:27:15.315Z",
+      "name": "demo",
+      "url": "http://localhost:3000/api/status",
+      "status": "unknown"
+    },
+    {
+      "id": "3e6ea8b0-5769-4611-bbb2-dbecc2e484ba",
+      "createdAt": "2026-08-27T13:27:53.469Z",
+      "name": "demo",
+      "url": "http://localhost:3000/api/status",
+      "status": "unknown"
+    }
+  ],
+  "bridges": [],
+  "events": [],
+  "jobs": [],
+  "users": [],
+  "sessions": [],
+  "agents": [],
+  "audit": []
+}

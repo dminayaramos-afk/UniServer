@@ -1,0 +1,28 @@
+{
+  "servers": [],
+  "bridges": [
+    {
+      "id": "8a38184f-507b-4c2d-bdd2-450849c30bf2",
+      "createdAt": "2026-08-27T13:27:53.122Z",
+      "name": "bridge-madrid"
+    }
+  ],
+  "events": [],
+  "jobs": [],
+  "users": [],
+  "sessions": [],
+  "agents": [],
+  "audit": [
+    {
+      "id": "2cfe159a-26a9-4a0a-ab7f-4a25d055e476",
+      "createdAt": "2026-08-27T13:27:53.123Z",
+      "actor": "legacy-superadmin",
+      "action": "bridges.manage",
+      "target": "8a38184f-507b-4c2d-bdd2-450849c30bf2",
+      "result": "SUCCESS",
+      "meta": {
+        "op": "create"
+      }
+    }
+  ]
+}

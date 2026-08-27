@@ -1,0 +1,37 @@
+{
+  "servers": [],
+  "bridges": [],
+  "events": [],
+  "jobs": [],
+  "users": [],
+  "sessions": [],
+  "agents": [
+    {
+      "id": "0c393021-d187-4e67-b3b7-5d57e953e878",
+      "createdAt": "2026-08-27T13:27:53.262Z",
+      "name": "agent-01",
+      "hostname": null,
+      "os": "linux",
+      "bridgeId": null,
+      "capabilities": [],
+      "tokenHash": "18a96c10b79805d6dea100c612bca2727055bc173ac7b71ade59333f7519c8d4",
+      "status": "online",
+      "lastHeartbeatAt": "2026-08-27T13:27:53.284Z",
+      "metrics": {
+        "cpu": 10
+      },
+      "updatedAt": "2026-08-27T13:27:53.284Z"
+    }
+  ],
+  "audit": [
+    {
+      "id": "7f161c87-f4c8-482c-ba14-5a8face8417a",
+      "createdAt": "2026-08-27T13:27:53.263Z",
+      "actor": "legacy-superadmin",
+      "action": "agents.register",
+      "target": "agent-01",
+      "result": "SUCCESS",
+      "meta": {}
+    }
+  ]
+}

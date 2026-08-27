@@ -1,0 +1,10 @@
+const {Router} = require('express');
+const c = require('../controllers/user.controller');
+const {requireAuth, requirePermission} = require('../middlewares/auth.middleware');
+const asyncHandler = require('../utils/asyncHandler');
+const r = Router();
+r.get('/', requireAuth, requirePermission('users.read'), asyncHandler(c.list));
+r.post('/', requireAuth, requirePermission('users.manage'), asyncHandler(c.create));
+r.patch('/:id/role', requireAuth, requirePermission('users.manage'), asyncHandler(c.setRole));
+r.patch('/:id/active', requireAuth, requirePermission('users.manage'), asyncHandler(c.setActive));
+module.exports = r;

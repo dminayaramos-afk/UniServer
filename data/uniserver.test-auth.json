@@ -1,0 +1,58 @@
+{
+  "servers": [],
+  "bridges": [],
+  "events": [],
+  "jobs": [],
+  "users": [
+    {
+      "id": "b9668cbc-131e-40be-a1ce-f9870ded0b24",
+      "createdAt": "2026-08-27T13:27:52.761Z",
+      "username": "viewer1",
+      "role": "VIEWER",
+      "passwordSalt": "b9a3540e131aa2e6500809d0edf8b5c6",
+      "passwordHash": "8064ece8222986e7f2a1d8c5995915fb6e000094d6194f57dc7c188734c76c757fee707ce398053a9fce017f36da1e130d273a45c6d3877bd1de0ffc9f2f6973",
+      "active": true
+    }
+  ],
+  "sessions": [
+    {
+      "id": "ccc72861-a3f9-470f-862f-90fb05fe29e8",
+      "createdAt": "2026-08-27T13:27:52.850Z",
+      "tokenHash": "ffeb43a911db883e6505614e3bd25334a639e6f8ced79552423ca97c201b20ee",
+      "userId": "b9668cbc-131e-40be-a1ce-f9870ded0b24",
+      "role": "VIEWER",
+      "username": "viewer1",
+      "expiresAt": "2026-08-28T01:27:52.850Z"
+    }
+  ],
+  "agents": [],
+  "audit": [
+    {
+      "id": "a21eefd9-7022-4389-a8ff-96aad7976ab7",
+      "createdAt": "2026-08-27T13:27:52.762Z",
+      "actor": "legacy-superadmin",
+      "action": "users.create",
+      "target": "viewer1",
+      "result": "SUCCESS",
+      "meta": {}
+    },
+    {
+      "id": "d272ec30-0afb-448b-9fda-a58866f98fa7",
+      "createdAt": "2026-08-27T13:27:52.850Z",
+      "actor": "viewer1",
+      "action": "auth.login",
+      "target": null,
+      "result": "SUCCESS",
+      "meta": {}
+    },
+    {
+      "id": "b2828a7c-21f4-464a-8969-4ce81364619c",
+      "createdAt": "2026-08-27T13:27:52.920Z",
+      "actor": "viewer1",
+      "action": "auth.login",
+      "target": null,
+      "result": "FAILURE",
+      "meta": {}
+    }
+  ]
+}

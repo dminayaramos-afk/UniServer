@@ -1,0 +1,1 @@
+const {log}=require('../utils/logger'); module.exports=(err,req,res,next)=>{log('error',err.message,{stack:err.stack});res.status(err.statusCode||500).json({ok:false,error:err.message||'Error interno'});};

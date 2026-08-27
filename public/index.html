@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#0b1020">
+<title>UniServer — Control Center</title>
+<style>
+:root{
+  --bg:#070b14;--panel:#0d1424;--panel2:#111a2d;--line:#22304a;--text:#edf3ff;--muted:#8d9bb5;
+  --accent:#6ea8fe;--accent2:#8b7cff;--good:#38d39f;--warn:#f5b942;--bad:#ff667a;
+  --shadow:0 18px 50px rgba(0,0,0,.25);--radius:18px
+}
+*{box-sizing:border-box}body{margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:
+radial-gradient(circle at 85% -10%,rgba(110,168,254,.16),transparent 30%),radial-gradient(circle at 15% 0,rgba(139,124,255,.10),transparent 25%),var(--bg);color:var(--text)}
+button,input{font:inherit}button{cursor:pointer}.hidden{display:none!important}
+.layout{min-height:100vh;display:grid;grid-template-columns:250px 1fr}.sidebar{position:sticky;top:0;height:100vh;padding:24px 16px;border-right:1px solid var(--line);background:rgba(7,11,20,.82);backdrop-filter:blur(18px)}
+.brand{display:flex;align-items:center;gap:12px;padding:8px 10px 26px}.logo{width:38px;height:38px;border-radius:12px;display:grid;place-items:center;background:linear-gradient(135deg,var(--accent),var(--accent2));font-weight:900;box-shadow:0 10px 25px rgba(110,168,254,.2)}
+.brand strong{display:block;font-size:15px}.brand small{color:var(--muted);font-size:11px}
+.nav{display:grid;gap:6px}.nav button{border:0;background:transparent;color:var(--muted);text-align:left;padding:12px 13px;border-radius:12px;display:flex;gap:11px;align-items:center}.nav button:hover,.nav button.active{background:#141e34;color:var(--text)}.nav .ico{width:22px;text-align:center}
+.side-bottom{position:absolute;bottom:20px;left:16px;right:16px}.userbox{border:1px solid var(--line);background:var(--panel);padding:12px;border-radius:14px}.userline{display:flex;justify-content:space-between;gap:10px}.role{font-size:10px;color:var(--accent);padding:3px 7px;border:1px solid #304b77;border-radius:999px}.logout{width:100%;margin-top:10px;border:1px solid var(--line);background:transparent;color:var(--muted);padding:9px;border-radius:10px}.logout:hover{color:var(--text)}
+.main{min-width:0}.topbar{height:76px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 34px;background:rgba(7,11,20,.65);backdrop-filter:blur(16px);position:sticky;top:0;z-index:5}.crumb{color:var(--muted);font-size:13px}.top-actions{display:flex;align-items:center;gap:10px}.status-dot{width:8px;height:8px;border-radius:50%;background:var(--good);box-shadow:0 0 0 5px rgba(56,211,159,.08)}.btn{border:1px solid var(--line);background:var(--panel);color:var(--text);padding:10px 14px;border-radius:11px}.btn:hover{border-color:#38527a;background:var(--panel2)}.btn.primary{border:0;background:linear-gradient(135deg,#5d91ef,#776ce5);box-shadow:0 10px 25px rgba(92,125,232,.18)}.btn.danger{color:#ff9aaa;border-color:#552b36}.content{padding:30px 34px;max-width:1500px;margin:auto}.hero{display:flex;justify-content:space-between;gap:20px;align-items:flex-end;margin-bottom:26px}.hero h1{font-size:30px;margin:5px 0 8px;letter-spacing:-.7px}.hero p{margin:0;color:var(--muted)}.hero-actions{display:flex;gap:10px}
+.grid{display:grid;gap:15px}.stats{grid-template-columns:repeat(4,minmax(0,1fr));margin-bottom:18px}.card{border:1px solid var(--line);background:linear-gradient(180deg,rgba(17,26,45,.94),rgba(10,16,29,.94));border-radius:var(--radius);box-shadow:var(--shadow)}.stat{padding:19px;position:relative;overflow:hidden}.stat:after{content:"";position:absolute;right:-30px;top:-35px;width:100px;height:100px;border-radius:50%;background:rgba(110,168,254,.06)}.stat-head{display:flex;justify-content:space-between;color:var(--muted);font-size:12px}.stat-value{font-size:30px;font-weight:750;margin:10px 0 3px}.stat-foot{font-size:11px;color:var(--muted)}.good{color:var(--good)}.bad{color:var(--bad)}.warn{color:var(--warn)}
+.two{grid-template-columns:1.55fr 1fr}.section{padding:20px}.section-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}.section-head h2{font-size:16px;margin:0}.section-head span{font-size:11px;color:var(--muted)}
+.table-wrap{overflow:auto}.table{width:100%;border-collapse:collapse;min-width:680px}.table th{text-align:left;color:#72819c;font-size:10px;text-transform:uppercase;letter-spacing:.7px;font-weight:600;padding:11px 10px;border-bottom:1px solid var(--line)}.table td{padding:14px 10px;border-bottom:1px solid rgba(34,48,74,.6);font-size:13px}.table tr:last-child td{border-bottom:0}.server-name{font-weight:650}.server-meta{display:block;color:var(--muted);font-size:10px;margin-top:3px}.badge{display:inline-flex;align-items:center;gap:6px;border-radius:999px;padding:5px 9px;font-size:10px;border:1px solid}.badge:before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor}.badge.online{color:var(--good);background:rgba(56,211,159,.06)}.badge.offline{color:var(--bad);background:rgba(255,102,122,.06)}.badge.unknown{color:var(--warn);background:rgba(245,185,66,.06)}
+.actions{display:flex;gap:6px}.mini{padding:7px 9px;border-radius:8px;font-size:11px}.empty{text-align:center;color:var(--muted);padding:35px 10px}
+.health{display:grid;gap:14px}.health-row{display:flex;align-items:center;justify-content:space-between;padding:13px;border:1px solid var(--line);border-radius:13px;background:rgba(13,20,36,.6)}.health-left{display:flex;align-items:center;gap:10px}.health-icon{width:34px;height:34px;border-radius:10px;display:grid;place-items:center;background:#16213a}.health-row small{color:var(--muted);display:block}.health-row strong{font-size:13px}.progress{height:6px;border-radius:99px;background:#18243a;overflow:hidden;margin-top:8px;width:130px}.progress i{display:block;height:100%;border-radius:inherit;background:linear-gradient(90deg,var(--accent),var(--accent2))}
+.activity{display:grid;gap:0}.activity-item{display:flex;gap:12px;padding:13px 0;border-bottom:1px solid rgba(34,48,74,.55)}.activity-item:last-child{border:0}.activity-dot{width:9px;height:9px;border-radius:50%;margin-top:5px;background:var(--accent)}.activity-item strong{font-size:12px}.activity-item small{display:block;color:var(--muted);margin-top:3px}
+.login{min-height:100vh;display:grid;place-items:center;padding:24px}.login-card{width:min(440px,100%);padding:32px}.login-brand{display:flex;align-items:center;gap:12px;margin-bottom:28px}.login h1{font-size:24px;margin:0 0 7px}.login p{color:var(--muted);font-size:13px;margin:0 0 24px}.field{display:grid;gap:7px;margin:14px 0}.field label{font-size:11px;color:#9aa8c0}.field input{width:100%;padding:12px 13px;border-radius:11px;border:1px solid var(--line);outline:0;background:#080e1b;color:var(--text)}.field input:focus{border-color:#4c6fa9;box-shadow:0 0 0 3px rgba(110,168,254,.08)}.login .btn{width:100%;margin-top:8px}.hint{font-size:10px;color:#66758f;margin-top:16px;line-height:1.5}.error{color:#ff8d9c;font-size:12px;margin-top:12px}.toast{position:fixed;right:22px;bottom:22px;padding:13px 16px;border-radius:12px;background:#141e34;border:1px solid #30415f;box-shadow:var(--shadow);font-size:12px;z-index:20;max-width:360px}
+@media(max-width:1050px){.layout{grid-template-columns:80px 1fr}.brand div,.nav button span:not(.ico),.side-bottom{display:none}.brand{justify-content:center;padding:8px 0 26px}.nav button{justify-content:center}.stats{grid-template-columns:repeat(2,1fr)}.two{grid-template-columns:1fr}.content{padding:24px}}
+@media(max-width:650px){.layout{display:block}.sidebar{display:none}.topbar{padding:0 16px}.content{padding:20px 14px}.hero{display:block}.hero-actions{margin-top:16px}.stats{grid-template-columns:1fr 1fr}.stat-value{font-size:25px}}
+</style>
+</head>
+<body>
+<div id="loginView" class="login">
+  <div class="card login-card">
+    <div class="login-brand"><div class="logo">U</div><div><strong>UniServer</strong><div style="color:var(--muted);font-size:11px">Control Center 1.1.0</div></div></div>
+    <h1>Bienvenido</h1>
+    <p>Conecta con tu instancia y administra tu infraestructura desde un único panel.</p>
+    <div class="field"><label>API KEY</label><input id="apiKey" type="password" placeholder="ADMIN_API_KEY"></div>
+    <div style="text-align:center;color:#56647d;font-size:11px;margin:5px 0">o utiliza una cuenta</div>
+    <div class="field"><label>USUARIO</label><input id="username" autocomplete="username" placeholder="admin"></div>
+    <div class="field"><label>CONTRASEÑA</label><input id="password" type="password" autocomplete="current-password" placeholder="••••••••"></div>
+    <button class="btn primary" onclick="login()">Entrar al panel</button>
+    <div id="loginError" class="error"></div>
+    <div class="hint">La API key se conserva solo en esta sesión del navegador. La autenticación real y los permisos se validan en el backend.</div>
+  </div>
+</div>
+
+<div id="app" class="layout hidden">
+  <aside class="sidebar">
+    <div class="brand"><div class="logo">U</div><div><strong>UniServer</strong><small>Control Center</small></div></div>
+    <nav class="nav">
+      <button class="active" data-view="overview" onclick="setView('overview')"><span class="ico">◈</span><span>Overview</span></button>
+      <button data-view="servers" onclick="setView('servers')"><span class="ico">▣</span><span>Servidores</span></button>
+      <button data-view="monitoring" onclick="setView('monitoring')"><span class="ico">◒</span><span>Monitoring</span></button>
+      <button data-view="events" onclick="setView('events')"><span class="ico">◉</span><span>Eventos</span></button>
+      <button data-view="agents" onclick="setView('agents')"><span class="ico">◆</span><span>Agentes</span></button>
+      <button data-view="settings" onclick="setView('settings')"><span class="ico">⚙</span><span>Configuración</span></button>
+    </nav>
+    <div class="side-bottom"><div class="userbox"><div class="userline"><strong id="userName">—</strong><span id="userRole" class="role">—</span></div><button class="logout" onclick="logout()">Cerrar sesión</button></div></div>
+  </aside>
+
+  <main class="main">
+    <header class="topbar"><div class="crumb" id="crumb">Overview / Estado general</div><div class="top-actions"><span class="status-dot"></span><span style="font-size:11px;color:var(--muted)" id="lastSync">Conectado</span><button class="btn" onclick="refresh()">↻ Actualizar</button></div></header>
+    <div class="content">
+      <section id="overviewView">
+        <div class="hero"><div><div style="color:var(--accent);font-size:11px;font-weight:700;letter-spacing:1.2px">OPERATIONS CENTER</div><h1>Estado de tu infraestructura</h1><p>Supervisa servidores, salud y conectividad desde un solo lugar.</p></div><div class="hero-actions"><button class="btn" onclick="scan()">⟳ Escanear todo</button></div></div>
+        <div class="grid stats">
+          <div class="card stat"><div class="stat-head"><span>Servidores</span><span>TOTAL</span></div><div class="stat-value" id="total">—</div><div class="stat-foot">Inventario registrado</div></div>
+          <div class="card stat"><div class="stat-head"><span>Online</span><span>HEALTHY</span></div><div class="stat-value good" id="online">—</div><div class="stat-foot" id="onlinePct">—</div></div>
+          <div class="card stat"><div class="stat-head"><span>Offline</span><span>ATTENTION</span></div><div class="stat-value bad" id="offline">—</div><div class="stat-foot">Requieren revisión</div></div>
+          <div class="card stat"><div class="stat-head"><span>Bridges</span><span>TOPOLOGY</span></div><div class="stat-value" id="bridges">—</div><div class="stat-foot">Conexiones registradas</div></div>
+        </div>
+        <div class="grid two">
+          <div class="card section"><div class="section-head"><h2>Servidores</h2><span id="serverCount">—</span></div><div class="table-wrap"><table class="table"><thead><tr><th>Servidor</th><th>Entorno</th><th>Estado</th><th>Latencia</th><th></th></tr></thead><tbody id="rows"></tbody></table></div></div>
+          <div class="card section"><div class="section-head"><h2>Salud del sistema</h2><span id="healthTime">—</span></div><div class="health">
+            <div class="health-row"><div class="health-left"><div class="health-icon">♥</div><div><strong>API</strong><small>Servicio principal</small></div></div><span class="badge online">Operativa</span></div>
+            <div class="health-row"><div class="health-left"><div class="health-icon">◌</div><div><strong>Runtime</strong><small id="runtime">Uptime —</small></div></div><span class="badge online">Estable</span></div>
+            <div class="health-row"><div class="health-left"><div class="health-icon">↯</div><div><strong>Conectividad</strong><small>Host 0.0.0.0:3000</small></div></div><span class="badge online">Activa</span></div>
+          </div></div>
+        </div>
+      </section>
+
+      <section id="serversView" class="hidden">
+        <div class="hero"><div><div style="color:var(--accent);font-size:11px;font-weight:700;letter-spacing:1.2px">INVENTORY</div><h1>Servidores</h1><p>Inventario centralizado y comprobaciones de salud.</p></div><div class="hero-actions"><button class="btn primary" onclick="scan()">⟳ Escanear salud</button></div></div>
+        <div class="card section"><div class="section-head"><h2>Inventario</h2><span id="serverCount2">—</span></div><div class="table-wrap"><table class="table"><thead><tr><th>Servidor</th><th>Host / URL</th><th>Entorno</th><th>Estado</th><th>Latencia</th><th>Acciones</th></tr></thead><tbody id="rows2"></tbody></table></div></div>
+      </section>
+
+      <section id="monitoringView" class="hidden">
+        <div class="hero"><div><div style="color:var(--accent);font-size:11px;font-weight:700;letter-spacing:1.2px">OBSERVABILITY</div><h1>Monitoring</h1><p>La base para métricas, histórico y alertas de UniServer.</p></div></div>
+        <div class="grid stats"><div class="card stat"><div class="stat-head"><span>Estado API</span><span>LIVE</span></div><div class="stat-value good">OK</div><div class="stat-foot">Health endpoint responde</div></div><div class="card stat"><div class="stat-head"><span>Uptime</span><span>RUNTIME</span></div><div class="stat-value" id="runtime2">—</div><div class="stat-foot">Tiempo desde el arranque</div></div><div class="card stat"><div class="stat-head"><span>Inventario</span><span>DATA</span></div><div class="stat-value" id="monitorTotal">—</div><div class="stat-foot">Servidores conocidos</div></div><div class="card stat"><div class="stat-head"><span>Alertas</span><span>ROADMAP</span></div><div class="stat-value warn">—</div><div class="stat-foot">Motor de alertas en evolución</div></div></div>
+        <div class="card section"><div class="section-head"><h2>Próxima capa de observabilidad</h2><span>Roadmap · Fase 2</span></div><div class="grid" style="grid-template-columns:repeat(3,1fr)"><div class="health-row"><div><strong>Métricas históricas</strong><small>CPU · RAM · Disco · Red</small></div></div><div class="health-row"><div><strong>Alertas</strong><small>Umbrales · ACK · RESOLVED</small></div></div><div class="health-row"><div><strong>Tiempo real</strong><small>Eventos · WebSockets</small></div></div></div></div>
+      </section>
+
+      <section id="eventsView" class="hidden">
+        <div class="hero"><div><div style="color:var(--accent);font-size:11px;font-weight:700;letter-spacing:1.2px">EVENT STREAM</div><h1>Eventos</h1><p>Actividad operativa y cambios del inventario.</p></div></div>
+        <div class="card section"><div class="section-head"><h2>Actividad reciente</h2><span>En tiempo real</span></div><div class="activity" id="activity"></div></div>
+      </section>
+
+      <section id="agentsView" class="hidden">
+        <div class="hero"><div><div style="color:var(--accent);font-size:11px;font-weight:700;letter-spacing:1.2px">EDGE MANAGEMENT</div><h1>Agentes</h1><p>Los agentes permiten monitorizar y operar servidores de forma segura.</p></div></div>
+        <div class="card section"><div class="section-head"><h2>Estado de agentes</h2><span>API protegida por RBAC</span></div><div class="empty">El inventario de agentes está disponible mediante la API administrativa. Esta vista queda preparada para conectar el listado en tiempo real.</div></div>
+      </section>
+
+      <section id="settingsView" class="hidden">
+        <div class="hero"><div><div style="color:var(--accent);font-size:11px;font-weight:700;letter-spacing:1.2px">PLATFORM</div><h1>Configuración</h1><p>Información de conexión y seguridad de esta sesión.</p></div></div>
+        <div class="card section"><div class="health">
+          <div class="health-row"><div><strong>API</strong><small>http://localhost:3000</small></div><span class="badge online">Conectada</span></div>
+          <div class="health-row"><div><strong>Autenticación</strong><small id="authMode">—</small></div><span class="badge online">Activa</span></div>
+          <div class="health-row"><div><strong>Sesión</strong><small>Credenciales almacenadas en memoria del navegador</small></div><button class="btn mini danger" onclick="logout()">Cerrar sesión</button></div>
+        </div></div>
+      </section>
+    </div>
+  </main>
+</div>
+<div id="toast" class="toast hidden"></div>
+
+<script>
+const state={token:sessionStorage.getItem('uniserver_token')||'',apiKey:sessionStorage.getItem('uniserver_key')||'',user:null,servers:[],lastHealth:null};
+const $=id=>document.getElementById(id);
+const esc=v=>String(v??'-').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+function authHeaders(){const h={'content-type':'application/json'};if(state.apiKey)h['x-api-key']=state.apiKey;if(state.token)h.authorization='Bearer '+state.token;return h}
+async function req(path,opt={}){const r=await fetch(path,{...opt,headers:{...authHeaders(),...(opt.headers||{})}});let d;try{d=await r.json()}catch{d={ok:r.ok}}if(!r.ok)throw new Error(d.error||`HTTP ${r.status}`);return d}
+function toast(msg){$('toast').textContent=msg;$('toast').classList.remove('hidden');clearTimeout(window.toastT);window.toastT=setTimeout(()=>$('toast').classList.add('hidden'),3200)}
+async function login(){
+  $('loginError').textContent='';
+  try{
+    const key=$('apiKey').value.trim(), username=$('username').value.trim(), password=$('password').value;
+    if(key){state.apiKey=key;state.token='';sessionStorage.setItem('uniserver_key',key)}
+    else{
+      if(!username||!password)throw new Error('Introduce usuario y contraseña, o una API key.');
+      const r=await fetch('/api/auth/login',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({username,password})});
+      const d=await r.json();if(!r.ok||!d.ok)throw new Error(d.error||'No se pudo iniciar sesión');
+      state.token=d.data.token;state.apiKey='';sessionStorage.setItem('uniserver_token',state.token);sessionStorage.removeItem('uniserver_key');
+    }
+    await boot();
+  }catch(e){$('loginError').textContent=e.message}
+}
+async function boot(){
+  const me=await req('/api/auth/me').catch(()=>null);
+  if(me?.ok)state.user=me.data;else state.user=state.apiKey?{username:'API Admin',role:'SUPER_ADMIN'}:null;
+  if(!state.user)throw new Error('Sesión no válida');
+  $('loginView').classList.add('hidden');$('app').classList.remove('hidden');
+  $('userName').textContent=state.user.username||'Usuario';$('userRole').textContent=state.user.role||'—';
+  $('authMode').textContent=state.apiKey?'API key · SUPER_ADMIN':'Sesión de usuario · RBAC';
+  await refresh();
+}
+function logout(){state.token='';state.apiKey='';sessionStorage.removeItem('uniserver_token');sessionStorage.removeItem('uniserver_key');location.reload()}
+async function refresh(){
+  try{
+    const [o,s,h,v]=await Promise.all([req('/api/admin/overview'),req('/api/servers'),req('/api/health'),req('/api/version')]);
+    state.servers=s.data||[];state.lastHealth=h.data;
+    const d=o.data||{};$('total').textContent=d.total??state.servers.length;$('online').textContent=d.online??state.servers.filter(x=>x.status==='online').length;$('offline').textContent=d.offline??state.servers.filter(x=>x.status==='offline').length;$('bridges').textContent=d.bridges??0;
+    const total=Number($('total').textContent)||0, online=Number($('online').textContent)||0;$('onlinePct').textContent=total?`${Math.round(online/total*100)}% del inventario saludable`:'Sin servidores';
+    $('serverCount').textContent=`${state.servers.length} registrados`;$('serverCount2').textContent=`${state.servers.length} registrados`;$('monitorTotal').textContent=state.servers.length;
+    const up=Math.round(h.data?.uptimeSec||0);$('runtime').textContent=`Uptime ${formatUptime(up)}`;$('runtime2').textContent=formatUptime(up);$('healthTime').textContent=new Date().toLocaleTimeString();
+    $('lastSync').textContent=`Sincronizado ${new Date().toLocaleTimeString()}`;
+    renderServers();renderActivity(v.data?.version);
+  }catch(e){toast('Error de conexión: '+e.message)}
+}
+function formatUptime(s){if(s<60)return `${s}s`;if(s<3600)return `${Math.floor(s/60)}m`;if(s<86400)return `${Math.floor(s/3600)}h ${Math.floor(s%3600/60)}m`;return `${Math.floor(s/86400)}d ${Math.floor(s%86400/3600)}h`}
+function statusBadge(s){const c=s==='online'?'online':s==='offline'?'offline':'unknown';return `<span class="badge ${c}">${esc(s||'unknown')}</span>`}
+function row(x,full=false){
+ const host=x.url||`${x.host||'-'}${x.port?':'+x.port:''}`,lat=x.health?.latencyMs;
+ return `<tr><td><span class="server-name">${esc(x.name)}</span><span class="server-meta">${esc(x.id)}</span></td>${full?`<td>${esc(host)}</td>`:''}<td>${esc(x.environment||'-')}</td><td>${statusBadge(x.status)}</td><td>${lat==null?'-':esc(lat)+' ms'}</td><td class="actions">${full?`<button class="btn mini" onclick="checkHealth('${esc(x.id)}')">Health</button>`:`<button class="btn mini" onclick="checkHealth('${esc(x.id)}')">↗</button>`}</td></tr>`
+}
+function renderServers(){
+ const empty='<tr><td colspan="6" class="empty">No hay servidores registrados.</td></tr>';
+ $('rows').innerHTML=state.servers.length?state.servers.map(x=>row(x,false)).join(''):empty;
+ $('rows2').innerHTML=state.servers.length?state.servers.map(x=>row(x,true)).join(''):empty;
+}
+async function checkHealth(id){try{toast('Comprobando salud…');await req('/api/servers/'+encodeURIComponent(id)+'/health',{method:'POST'});await refresh();toast('Comprobación completada')}catch(e){toast('Health check: '+e.message)}}
+async function scan(){try{toast('Escaneando servidores…');await req('/api/admin/scan',{method:'POST'});await refresh();toast('Escaneo completado')}catch(e){toast('Escaneo: '+e.message)}}
+function renderActivity(version){
+ const items=state.servers.slice(0,5).map(s=>({title:`${s.name}: ${s.status||'unknown'}`,desc:s.health?.latencyMs!=null?`Health check · ${s.health.latencyMs} ms`:'Sin comprobación reciente'}));
+ if(!items.length)items.push({title:'UniServer listo',desc:`API ${version||'1.1.0'} · Esperando actividad`});
+ $('activity').innerHTML=items.map(i=>`<div class="activity-item"><i class="activity-dot"></i><div><strong>${esc(i.title)}</strong><small>${esc(i.desc)}</small></div></div>`).join('');
+}
+function setView(view){
+ ['overview','servers','monitoring','events','agents','settings'].forEach(v=>$(`${v}View`).classList.toggle('hidden',v!==view));
+ document.querySelectorAll('.nav button').forEach(b=>b.classList.toggle('active',b.dataset.view===view));
+ const names={overview:'Overview / Estado general',servers:'Servidores / Inventario',monitoring:'Monitoring / Observability',events:'Eventos / Actividad',agents:'Agentes / Edge',settings:'Configuración / Plataforma'};$('crumb').textContent=names[view];
+}
+$('password').addEventListener('keydown',e=>{if(e.key==='Enter')login()});
+$('apiKey').addEventListener('keydown',e=>{if(e.key==='Enter')login()});
+if(state.token||state.apiKey){boot().catch(()=>{state.token='';state.apiKey='';sessionStorage.clear()})}
+</script>
+</body>
+</html>

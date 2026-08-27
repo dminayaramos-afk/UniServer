@@ -1,0 +1,4 @@
+const store=require('./store.service'); const {checkServer}=require('./health.service');
+async function checkAll(){const servers=store.list('servers'); const out=[]; for(const s of servers){const health=await checkServer(s); store.update('servers',s.id,{health,lastCheckAt:health.checkedAt,status:health.ok?'online':'offline'}); if(!health.ok)store.addEvent({type:'health',severity:'warning',serverId:s.id,message:`Servidor no saludable: ${health.error||health.status}`}); out.push({...s,health});} return out;}
+function summary(){const servers=store.list('servers'); const online=servers.filter(s=>s.status==='online').length; return {total:servers.length,online,offline:servers.length-online,bridges:store.list('bridges').length,events:store.list('events').slice(-20).reverse()};}
+module.exports={checkAll,summary};
